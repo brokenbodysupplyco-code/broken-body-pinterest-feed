@@ -16,7 +16,8 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Generate product feed
         env:
-          FOURTHWALL_API_KEY: ${{ secrets.FOURTHWALL_API_KEY }}
+          FOURTHWALL_API_USER: ${{ secrets.FOURTHWALL_API_USER }}
+          FOURTHWALL_API_PASSWORD: ${{ secrets.FOURTHWALL_API_PASSWORD }}
           FOURTHWALL_STORE_URL: https://brokenbodysupplyco.com
         run: python feed.py
       - name: Commit updated feed
