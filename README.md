@@ -1,13 +1,13 @@
-# BROKEN BODY™ Pinterest product feed
-
-Generates a product feed from Fourthwall's Product Offer API using GitHub Actions.
+# BROKEN BODY™ Pinterest feed
 
 ## Setup
-1. In Fourthwall, open **Settings → For Developers → OpenAPI** and generate an OpenAPI credential. Do not share or paste it in chat.
-2. In GitHub, open **Settings → Secrets and variables → Actions → New repository secret**. Name it `FOURTHWALL_API_KEY` and paste the credential there.
-3. Enable Actions workflows and allow workflow write permissions in **Settings → Actions → General → Workflow permissions**.
-4. Run **Actions → Update Pinterest product feed → Run workflow**.
-5. Review the generated `public/products.csv` and check that the URLs and prices are correct before submitting to Pinterest.
-6. In **Settings → Pages**, deploy from branch `main`, folder `/docs` (or change output to `docs/products.csv`). GitHub Pages does not support deploying from `/public` using branch mode. Recommended: use GitHub Pages GitHub Actions deployment workflow instead.
 
-**Note:** This is a starter scaffold, not a verified Pinterest-ready integration. The Fourthwall Product Offer API field names for product URLs and images, and Pinterest's current required catalog fields and validation rules, must be confirmed with real API responses before activation. It intentionally refuses to publish an empty feed.
+1. Store Fourthwall Open API Basic credentials in GitHub Actions secrets `FOURTHWALL_API_USER` and `FOURTHWALL_API_PASSWORD`. Never put credentials in files.
+2. Upload `feed.py`, `requirements.txt`, and `.github/workflows/update-feed.yml` preserving the workflow folder path.
+3. Enable GitHub Actions and set workflow permissions to **Read and write permissions** in Settings → Actions → General.
+4. Run **Actions → Update Pinterest product feed → Run workflow**. If Fourthwall rejects Basic auth, the job fails safely and does not publish a feed. This API's separate help documentation describes Bearer authentication, so that result needs investigation rather than guessing.
+5. If the run succeeds, inspect `docs/products.csv` for correct product links, images, prices, and product eligibility. Do not submit to Pinterest until verified.
+6. Enable **Settings → Pages → Deploy from a branch**, branch `main`, folder `/docs`. Once published, the feed URL should be `https://brokenbodysupplyco-code.github.io/broken-body-pinterest-feed/products.csv`.
+7. Add that URL to Pinterest Catalogs only after validating the file and Pinterest's current requirements.
+
+This starter uses product-level rows, not variant-level rows. Pinterest requirements and product URL shapes still need validation. The repository and feed are public; credentials remain GitHub secrets.
